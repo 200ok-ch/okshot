@@ -6,7 +6,7 @@
  \___/|_|\_\___/_| |_|\___/ \__|
 #+end_example
 
-#+html: <img src="https://github.com/200ok-ch/okshot/workflows/CI/badge.svg"/>
+# #+html: <img src="https://github.com/200ok-ch/okshot/workflows/CI/badge.svg"/>
 #+html: <a href="https://rubygems.org/gems/okshot"> <img src="https://badge.fury.io/rb/okshot.svg"/></a>
 
 * NAME
