@@ -1,0 +1,164 @@
+#+begin_example
+       _        _           _
+  ___ | | _____| |__   ___ | |_
+ / _ \| |/ / __| '_ \ / _ \| __|
+| (_) |   <\__ \ | | | (_) | |_
+ \___/|_|\_\___/_| |_|\___/ \__|
+#+end_example
+
+#+html: <img src="https://github.com/200ok-ch/okshot/workflows/CI/badge.svg"/>
+#+html: <a href="https://rubygems.org/gems/okshot"> <img src="https://badge.fury.io/rb/okshot.svg"/></a>
+
+* NAME
+
+=okshot= - Take and annotate screenshots in Linux with standard tools.
+
+* SYNOPSIS
+
+  #+begin_example
+    Usage: okshot [options]
+        -c, --copy-clipboard             Copy PNG file from clipboard and upload
+        -i, --inkscape                   Use inkscape to edit the screenshot and upload
+  #+end_example
+
+* DESCRIPTION
+
+=okshot= takes a screenshot, saves it to a FTP server and copies a web
+accessible URL to your clipboard. Optionally, the screenshot can be
+annotated using Inkscape.
+
+This gem is inspired by the lack of good screenshot tooling in Linux.
+However, it's so very easy to build =okshot=, because
+
+For uploading the files via FTP, it needs these environment variables set:
+
+For example, you can do this in your shell config file (=~/.bashrc=,
+=~/.zshrc=) or even via [[https://200ok.ch/posts/contextual-helpers-with-zsh-hooks.html][sourceme]]. For example:
+
+#+begin_example
+export OKSHOT_HOST=ftp.some-server.ch
+export OKSHOT_USER=your_user
+export OKSHOT_PASSWORD=your_password
+export OKSHOT_URL_PREFIX=https://okshot.your_domain.ch
+#+end_example
+
+* EXAMPLES
+
+Add tags to a file. Tags are always unique.
+
+#+begin_example
+  $ touch foobar
+  $ okshot -a tag1 foobar
+  $ ls foobar*
+  foobar--[tag1]
+  $ okshot -a tag2 foobar--\[tag1\]
+  $ ls foobar*
+  foobar--[tag1,tag2]
+  $ okshot -a tag3,tag2 foobar--[tag1,tag2].pdf
+  $ ls foobar*
+  foobar--[tag1,tag2,tag3].pdf
+#+end_example
+
+Delete a tag from a file.
+
+#+begin_example
+  $ find . | grep business_card | head -n 1
+  ./archiv/Reto_Huber--[business_card,somedia,seo].pdf
+  $ okshot -d seo ./archiv/Reto_Huber--[business_card,somedia,seo].pdf
+  $ find . | grep business_card | head -n 1
+  ./archiv/Reto_Huber--[business_card,somedia].pdf
+#+end_example
+
+Interactively add tags (with auto-completion through readline) to a file.
+
+#+begin_example
+  $ okshot -i foo
+  > t[TAB]
+  tag1  tag2  tag3
+  > tag2, new tag
+  $ ls foo* | grep new
+  foo--[new_tag,tag2]
+#+end_example
+
+List all tags in the current folder.
+
+#+begin_example
+  $ touch foo
+  $ touch bar.txt
+  $ touch foobar--[tag1,tag2].pdf
+  $ touch baz--[tag1].txt
+  $ okshot -l
+  tag1(2)
+  tag2(1)
+#+end_example
+
+List all tags for a given path glob (assuming the same data set as above).
+
+#+begin_example
+  $ okshot -l '*txt'
+  tag1(1)
+#+end_example
+
+Rename tag.
+
+#+begin_example
+  $ okshot -l
+  200ok_expense(8)
+  business_card(4)
+  $ okshot -r 200ok_expense 200ok,expense
+  $ okshot -l
+  expense(8)
+  200ok(8)
+  business_card(4)
+#+end_example
+
+Search files with tags.
+
+#+begin_example
+  $ okshot -s somedia,seo,business_card
+  archiv/Reto_Huber--[business_card,seo,somedia].pdf
+  archiv/Reto_Huber--[business_card,seo,somedia].txt
+  $ okshot -s business_card '**/*pdf'
+  archiv/Reto_Huber--[business_card,seo,somedia].pdf
+  archiv/Stefan_Schmidt--[business_card,lawoon].pdf
+#+end_example
+
+* INSTALLATION
+
+=okshot= is implemented in [[https://www.ruby-lang.org/en/][Ruby]] and can be installed as a [[https://rubygems.org/][gem]].
+
+  #+begin_example
+    gem install okshot
+  #+end_example
+
+It assumes you're using the [[https://i3wm.org/][i3wm]] tiling window manager and uses these
+standard Linux tools:
+
+- [[https://linux.die.net/man/1/wmctrl][wmctrl]]
+- [[https://inkscape.org/][inkscape]]
+- [[https://imagemagick.org/][imagemagick]]
+
+Install dependencies:
+
+#+begin_src shell
+apt-get install imagemagick inkscape wmctrl
+#+end_src
+
+* DEVELOPMENT
+
+=okshot= is implemented in [[https://www.ruby-lang.org/en/][Ruby]], dependencies are managed with [[https://bundler.io/][bundler]].
+
+After checking out the repo, run =bin/setup= to install dependencies.
+You can also run =bin/console= for an interactive prompt that will
+allow you to experiment.
+
+To install this gem onto your local machine, run =bundle exec rake
+install=. To publish a new version, update the version number in
+=version.rb=, and then run =bundle exec rake publish=, which will
+create a git tag for the version, push git commits and tags, and push
+the =.gem= file to [[https://rubygems.org][rubygems.org]].
+
+# * TESTS
+
+# Tests are implemented with [[https://rspec.info/][RSpec]] and can be run with =bundle exec
+# rspec spec=.
