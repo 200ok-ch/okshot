@@ -86,3 +86,6 @@ the =.gem= file to [[https://rubygems.org][rubygems.org]].
 
 # Tests are implemented with [[https://rspec.info/][RSpec]] and can be run with =bundle exec
 # rspec spec=.
+* DEMO
+
+[[https://github.com/200ok-ch/okshot/wiki/videos/demo.gif]]
