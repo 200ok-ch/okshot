@@ -32,95 +32,19 @@ However, it's so very easy to build =okshot=, because
 
 For uploading the files via FTP, it needs these environment variables set:
 
+- OKSHOT_HOST
+- OKSHOT_USER
+- OKSHOT_PASSWORD
+- OKSHOT_URL_PREFIX
+
 For example, you can do this in your shell config file (=~/.bashrc=,
-=~/.zshrc=) or even via [[https://200ok.ch/posts/contextual-helpers-with-zsh-hooks.html][sourceme]]. For example:
+=~/.zshrc=) or via [[https://200ok.ch/posts/contextual-helpers-with-zsh-hooks.html][sourceme]]. For example:
 
 #+begin_example
 export OKSHOT_HOST=ftp.some-server.ch
 export OKSHOT_USER=your_user
 export OKSHOT_PASSWORD=your_password
 export OKSHOT_URL_PREFIX=https://okshot.your_domain.ch
-#+end_example
-
-* EXAMPLES
-
-Add tags to a file. Tags are always unique.
-
-#+begin_example
-  $ touch foobar
-  $ okshot -a tag1 foobar
-  $ ls foobar*
-  foobar--[tag1]
-  $ okshot -a tag2 foobar--\[tag1\]
-  $ ls foobar*
-  foobar--[tag1,tag2]
-  $ okshot -a tag3,tag2 foobar--[tag1,tag2].pdf
-  $ ls foobar*
-  foobar--[tag1,tag2,tag3].pdf
-#+end_example
-
-Delete a tag from a file.
-
-#+begin_example
-  $ find . | grep business_card | head -n 1
-  ./archiv/Reto_Huber--[business_card,somedia,seo].pdf
-  $ okshot -d seo ./archiv/Reto_Huber--[business_card,somedia,seo].pdf
-  $ find . | grep business_card | head -n 1
-  ./archiv/Reto_Huber--[business_card,somedia].pdf
-#+end_example
-
-Interactively add tags (with auto-completion through readline) to a file.
-
-#+begin_example
-  $ okshot -i foo
-  > t[TAB]
-  tag1  tag2  tag3
-  > tag2, new tag
-  $ ls foo* | grep new
-  foo--[new_tag,tag2]
-#+end_example
-
-List all tags in the current folder.
-
-#+begin_example
-  $ touch foo
-  $ touch bar.txt
-  $ touch foobar--[tag1,tag2].pdf
-  $ touch baz--[tag1].txt
-  $ okshot -l
-  tag1(2)
-  tag2(1)
-#+end_example
-
-List all tags for a given path glob (assuming the same data set as above).
-
-#+begin_example
-  $ okshot -l '*txt'
-  tag1(1)
-#+end_example
-
-Rename tag.
-
-#+begin_example
-  $ okshot -l
-  200ok_expense(8)
-  business_card(4)
-  $ okshot -r 200ok_expense 200ok,expense
-  $ okshot -l
-  expense(8)
-  200ok(8)
-  business_card(4)
-#+end_example
-
-Search files with tags.
-
-#+begin_example
-  $ okshot -s somedia,seo,business_card
-  archiv/Reto_Huber--[business_card,seo,somedia].pdf
-  archiv/Reto_Huber--[business_card,seo,somedia].txt
-  $ okshot -s business_card '**/*pdf'
-  archiv/Reto_Huber--[business_card,seo,somedia].pdf
-  archiv/Stefan_Schmidt--[business_card,lawoon].pdf
 #+end_example
 
 * INSTALLATION
