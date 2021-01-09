@@ -17,6 +17,7 @@
 
   #+begin_example
     Usage: okshot [options]
+        -s, --simple                     Take a screenshot without annotation and upload
         -c, --copy-clipboard             Copy PNG file from clipboard and upload
         -i, --inkscape                   Use inkscape to edit the screenshot and upload
   #+end_example
@@ -55,8 +56,13 @@ export OKSHOT_URL_PREFIX=https://okshot.your_domain.ch
     gem install okshot
   #+end_example
 
-It assumes you're using the [[https://i3wm.org/][i3wm]] tiling window manager and uses these
-standard Linux tools:
+It assumes you're using the [[https://i3wm.org/][i3wm]] tiling window manager and uses
+standard Linux tools. For all flags, it requires:
+
+- [[https://imagemagick.org/][imagemagick]]
+- [[https://linux.die.net/man/1/ftp][ftp]]
+
+For the flag =-i=, it additionally requires:
 
 - [[https://linux.die.net/man/1/wmctrl][wmctrl]]
 - [[https://inkscape.org/][inkscape]]
@@ -65,7 +71,7 @@ standard Linux tools:
 Install dependencies:
 
 #+begin_src shell
-apt-get install imagemagick inkscape wmctrl
+apt-get install imagemagick ftp inkscape wmctrl
 #+end_src
 
 * DEVELOPMENT

@@ -56,8 +56,10 @@ elif [[ $1 == -i ]]; then
   inkscape -o /tmp/$screenshot /tmp/$screenshot.svg
 
   rm /tmp/$screenshot.svg
-else
+elif [[ $1 == -s ]]; then
   import /tmp/$screenshot
+else
+  exit 1
 fi
 
 HOST=$OKSHOT_HOST
