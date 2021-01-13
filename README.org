@@ -6,7 +6,6 @@
  \___/|_|\_\___/_| |_|\___/ \__|
 #+end_example
 
-# #+html: <img src="https://github.com/200ok-ch/okshot/workflows/CI/badge.svg"/>
 #+html: <a href="https://rubygems.org/gems/okshot"> <img src="https://badge.fury.io/rb/okshot.svg"/></a>
 
 * NAME
@@ -57,21 +56,25 @@ export OKSHOT_URL_PREFIX=https://okshot.your_domain.ch
 
 It uses the following standard Linux tools. For all flags, it requires:
 
-- [[https://imagemagick.org/][imagemagick]]
-- [[https://linux.die.net/man/1/ftp][ftp]]
-- [[https://linux.die.net/man/1/uuidgen][uuigen]]
-- [[https://linux.die.net/man/1/xclip][xclip]]
+| Program     | Rationale                                                        |
+|-------------+------------------------------------------------------------------|
+| [[https://imagemagick.org/][imagemagick]] | Takes the actual screenshot as a PNG file.                       |
+| [[https://linux.die.net/man/1/uuidgen][uuigen]]      | Adds a partial UUID to the screenshot name to ensure uniqueness. |
+| [[https://linux.die.net/man/1/ftp][ftp]]         | Uploads the final screenshot to a FTP server.                    |
+| [[https://linux.die.net/man/1/xclip][xclip]]       | Copies the public screenshot URL to the clipboard.               |
+| [[http://manpages.ubuntu.com/manpages/xenial/man1/notify-send.1.html][notify-send]] | Creates a desktop notification that the URL is in the clipboard. |
 
 For the flag =-i=, it additionally requires:
 
-- [[https://linux.die.net/man/1/wmctrl][wmctrl]]
-- [[https://inkscape.org/][inkscape]]
-- [[https://imagemagick.org/][imagemagick]]
+| Program  | Rationale                           |
+|----------+-------------------------------------|
+| [[https://inkscape.org/][inkscape]] | Annotate the image in all the ways. |
+| [[https://linux.die.net/man/1/wmctrl][wmctrl]]   | Starts Inkscape in full screen.     |
 
 Install dependencies:
 
 #+begin_src shell
-apt-get install imagemagick ftp inkscape wmctrl uuid-runtime xclip
+apt-get install imagemagick ftp inkscape wmctrl uuid-runtime xclip libnotify-bin
 #+end_src
 
 * DEVELOPMENT
