@@ -14,7 +14,6 @@ elif [[ $1 == -h ]]; then
   echo " -c: Copy clipboard to file and upload"
   echo " -i: Use inkscape to edit the screenshot and upload"
   echo " -h: Show this help"
-  exit 0
 elif [[ $1 == -i ]]; then
   import /tmp/$screenshot
 
@@ -62,19 +61,31 @@ else
   exit 1
 fi
 
-HOST=$OKSHOT_HOST
-USER=$OKSHOT_USER
-PASSWD=$OKSHOT_PASSWORD
+echo "SCREENSHOT FILE: "
 
-ftp -p -n -v $HOST <<END_SCRIPT
+echo "/tmp/${screenshot}"
+
+
+if [[ $2 == -C ]]; then
+  # Copy to clipboard
+  xclip -selection clipboard -t image/png -i /tmp/$screenshot
+
+  notify-send "Copied screenshot to clipboard"
+else
+  # Upload to host
+  HOST=$OKSHOT_HOST
+  USER=$OKSHOT_USER
+  PASSWD=$OKSHOT_PASSWORD
+
+  ftp -p -n -v $HOST <<END_SCRIPT
 user $USER $PASSWD
 put /tmp/$screenshot $screenshot
 quit
 END_SCRIPT
 
-screenshot_url="$OKSHOT_URL_PREFIX/$screenshot"
+  screenshot_url="$OKSHOT_URL_PREFIX/$screenshot"
+  echo $screenshot_url | xclip -selection c
+  notify-send "Copied $screenshot_url to clipboard"
+fi
 
-echo $screenshot_url | xclip -selection c
-
-notify-send "Copied $screenshot_url to clipboard"
-rm /tmp/$screenshot
+exit 0

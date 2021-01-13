@@ -16,18 +16,21 @@
 
   #+begin_example
     Usage: okshot [options]
+        -C, --copy-to-clipboard          Copy PNG file from clipboard and upload
         -s, --simple                     Take a screenshot without annotation and upload
-        -c, --copy-clipboard             Copy PNG file from clipboard and upload
+        -c, --copy-from-clipboard        Copy PNG file from clipboard and upload
         -i, --inkscape                   Use inkscape to edit the screenshot and upload
   #+end_example
 
 * DESCRIPTION
 
-=okshot= takes a screenshot, saves it to a FTP server and copies a web
-accessible URL to your clipboard. Optionally, the screenshot can be
-annotated using Inkscape.
+=okshot= takes a screenshot, optionally annotates it and then saves it
+either to the clipboard or uploads it to a FTP server and copies a web
+accessible URL to your clipboard.
 
 This gem is inspired by the lack of good screenshot tooling in Linux.
+However, Linux has all the tools available that can easily be strung
+together to get the ultimate screenshot tool.
 
 For uploading the files via FTP, it needs these environment variables set:
 
@@ -60,9 +63,15 @@ It uses the following standard Linux tools. For all flags, it requires:
 |-------------+------------------------------------------------------------------|
 | [[https://imagemagick.org/][imagemagick]] | Takes the actual screenshot as a PNG file.                       |
 | [[https://linux.die.net/man/1/uuidgen][uuigen]]      | Adds a partial UUID to the screenshot name to ensure uniqueness. |
-| [[https://linux.die.net/man/1/ftp][ftp]]         | Uploads the final screenshot to a FTP server.                    |
 | [[https://linux.die.net/man/1/xclip][xclip]]       | Copies the public screenshot URL to the clipboard.               |
 | [[http://manpages.ubuntu.com/manpages/xenial/man1/notify-send.1.html][notify-send]] | Creates a desktop notification that the URL is in the clipboard. |
+
+Without the flag =-C= (=--copy-to-clipboard=), the file is uploaded to
+an FTP server and requires:
+
+| Program     | Rationale                                                        |
+|-------------+------------------------------------------------------------------|
+| [[https://linux.die.net/man/1/ftp][ftp]]         | Uploads the final screenshot to a FTP server.                    |
 
 For the flag =-i=, it additionally requires:
 
