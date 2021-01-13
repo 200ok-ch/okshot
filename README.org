@@ -29,7 +29,6 @@ accessible URL to your clipboard. Optionally, the screenshot can be
 annotated using Inkscape.
 
 This gem is inspired by the lack of good screenshot tooling in Linux.
-However, it's so very easy to build =okshot=, because
 
 For uploading the files via FTP, it needs these environment variables set:
 
@@ -56,11 +55,12 @@ export OKSHOT_URL_PREFIX=https://okshot.your_domain.ch
     gem install okshot
   #+end_example
 
-It assumes you're using the [[https://i3wm.org/][i3wm]] tiling window manager and uses
-standard Linux tools. For all flags, it requires:
+It uses the following standard Linux tools. For all flags, it requires:
 
 - [[https://imagemagick.org/][imagemagick]]
 - [[https://linux.die.net/man/1/ftp][ftp]]
+- [[https://linux.die.net/man/1/uuidgen][uuigen]]
+- [[https://linux.die.net/man/1/xclip][xclip]]
 
 For the flag =-i=, it additionally requires:
 
@@ -71,7 +71,7 @@ For the flag =-i=, it additionally requires:
 Install dependencies:
 
 #+begin_src shell
-apt-get install imagemagick ftp inkscape wmctrl
+apt-get install imagemagick ftp inkscape wmctrl uuid-runtime xclip
 #+end_src
 
 * DEVELOPMENT

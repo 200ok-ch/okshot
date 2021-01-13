@@ -48,7 +48,7 @@ elif [[ $1 == -i ]]; then
   wmctrl -ia "${winid}"
 
   # Make it fullscreen
-  i3-msg fullscreen enable > /dev/null;
+  wmctrl -ia "${winid}" -b toggle,fullscreen
 
   # Wait for the application to quit
   wait "${pid}";
