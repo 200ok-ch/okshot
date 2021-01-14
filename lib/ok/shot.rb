@@ -33,7 +33,7 @@ module OK
         opts.on(
           '-s',
           '--simple',
-          'Take a screenshot without annotation and upload'
+          'Take a screenshot without annotation and upload. This is the default.'
         ) do |c|
           options.flag = 's'
         end
@@ -53,8 +53,8 @@ module OK
         end
       end.parse!
 
+      options.flag = 's' unless options.flag
       take_screenshot(options)
-      exit
     end
   end
 end

@@ -17,7 +17,7 @@
   #+begin_example
     Usage: okshot [options]
         -C, --copy-to-clipboard          Copy PNG file from clipboard and upload
-        -s, --simple                     Take a screenshot without annotation and upload
+        -s, --simple                     Take a screenshot without annotation and upload. This is thedefault.
         -c, --copy-from-clipboard        Copy PNG file from clipboard and upload
         -i, --inkscape                   Use inkscape to edit the screenshot and upload
   #+end_example
